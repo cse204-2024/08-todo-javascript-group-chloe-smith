@@ -37,7 +37,19 @@ function displayToDos(todos){
 
 window.onload = function(){
     getAndDisplayToDos();
-    document.getElementById("Add").addEventListener("click", addNewTodo)
+    document.getElementById("Add").addEventListener("click", addNewTodo);
+    document.getElementById("input-box").addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) { 
+            event.preventDefault();
+            addNewTodo();
+        }
+    });
+    Delete.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+            deleteTodo(id);
+        }
+    });
+
 }
 
 function addNewTodo(){
@@ -60,14 +72,20 @@ function addNewTodo(){
 
             let Delete = document.createElement("button");
             Delete.textContent = "Delete";
+            
             Delete.addEventListener("click", () => deleteTodo(todotext.id));
             todo.appendChild(Delete);
             document.getElementById("TodoList").appendChild(todo);
+
+            let Completed = document.createElement("button");
+            Completed.textContent = "Completed";
+            Completed.addEventListener("click", () => updateTodo(todotext.id));
+            todo.insertBefore(Completed, todoText);
+            document.getElementById("TodoList").appendChild(todo);
         
             console.log(todo);
-
-            // document.getElementById("Add").removeEventListener("click", addNewTodo);
-            // document.getElementById("Add").addEventListener("click", addNewTodo);
+            document.getElementById("input-box").value = "";
+            
         } else if (this.readyState == 4) {
             console.log(this.responseText);
 
@@ -81,23 +99,26 @@ function addNewTodo(){
 
 
 
-function updateTodo(id, status){
-    let xhttp = newXMLHttpRequest();
+function updateTodo(id){
+    let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
-        if (this.state == 4){
+        if (this.readyState == 4){
             if (this.status ==200){
                 console.log('Todo updated');
-                getAndDisplayToDos()
+        
+                let todoElement = document.getElementById(id);
+                todoElement.classList.add('completed-task');
+                
             } else{
                 console.error('Failed to update ToDo', this.responseText);
             }
         }
     };
     xhttp.open('PUT', `https://cse204.work/todos/${id}`, true);
-    xhttp2.setRequestHeader("Content-type", "application/json");
-    xhttp2.setRequestHeader("x-api-key", "93064f-f9b3f4-8689e1-3a0fa1-e3a22b");
-    xhttp.send(JSON.stringify(newData));
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("x-api-key", "93064f-f9b3f4-8689e1-3a0fa1-e3a22b");
+    xhttp.send();
 }
 
 function deleteTodo(id){
@@ -124,3 +145,4 @@ function deleteTodo(id){
     xhttp.send();
 }
 
+//how can I go about making the delete button delete when I hover over it and press enter 

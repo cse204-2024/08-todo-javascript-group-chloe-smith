@@ -46,9 +46,27 @@ button{
     outline: none;
     border-radius: 50px;
     padding: 10px;
+    cursor: pointer;
+
 }
 
 ul li{
     list-style: none;
     padding: 20px;
+}
+
+.checkbox-input{
+    position: absolute;
+    cursor: pointer;
+}
+.completed-task {
+    text-decoration: line-through;
+    color: #777;
+}
+button:focus{
+    background-color: greenyellow;
+
+}
+.delete-button{
+    background-color: blue;
 }
