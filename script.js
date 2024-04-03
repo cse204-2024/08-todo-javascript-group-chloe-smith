@@ -1,5 +1,3 @@
-document.getElementById("Add").addEventListener("click", addNewTodo)
-
 
 function getAndDisplayToDos(){
 
@@ -20,11 +18,17 @@ function getAndDisplayToDos(){
 
 function displayToDos(todos){
     todos.forEach(element => {
-        todo = document.createElement("div");
-        todoText = document.createElement("span"); 
+        let todo = document.createElement("div");
+        let todoText = document.createElement("span"); 
         todoText.textContent = element.text;
         todo.appendChild(todoText)
         document.getElementById("TodoList").appendChild(todo)
+
+        let Delete = document.createElement("button");
+        Delete.textContent = "Delete";
+        Delete.addEventListener("click", () => deleteTodo(element.id))
+        todo.appendChild(Delete);
+        document.getElementById("TodoList").appendChild(todo);
         
     });
 
@@ -33,19 +37,37 @@ function displayToDos(todos){
 
 window.onload = function(){
     getAndDisplayToDos();
+    document.getElementById("Add").addEventListener("click", addNewTodo)
 }
 
 function addNewTodo(){
     
     let data = {
-        text: document.getElementById("input-box").value
+        text: document.getElementById("input-box").value.trim()
     }
+    console.log(data);
     let xhttp2 = new XMLHttpRequest();
     xhttp2.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let todo = JSON.parse(this.responseText);
-            getAndDisplayToDos()
+            let todotext = JSON.parse(this.responseText);
+            // getAndDisplayToDos()
+            let todo = document.createElement("div");
+            let todoText = document.createElement("span"); 
+            todoText.textContent = todotext.text;
+            todo.id = todotext.id;
+            todo.appendChild(todoText);
+            document.getElementById("TodoList").appendChild(todo);
+
+            let Delete = document.createElement("button");
+            Delete.textContent = "Delete";
+            Delete.addEventListener("click", () => deleteTodo(todotext.id));
+            todo.appendChild(Delete);
+            document.getElementById("TodoList").appendChild(todo);
+        
             console.log(todo);
+
+            // document.getElementById("Add").removeEventListener("click", addNewTodo);
+            // document.getElementById("Add").addEventListener("click", addNewTodo);
         } else if (this.readyState == 4) {
             console.log(this.responseText);
 
@@ -85,7 +107,11 @@ function deleteTodo(id){
         if (this.readyState === 4) {
             if (this.status === 200) {
                 console.log('ToDo deleted successfully');
-                getAndDisplayToDos()
+                let todoDiv = document.getElementById("TodoList");
+
+                let todoElement = document.getElementById(id);
+                todoDiv.removeChild(todoElement);
+                
             } else {
                 console.error('Failed to delete ToDo:', this.responseText);
             }
