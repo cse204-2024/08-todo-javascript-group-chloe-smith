@@ -1,3 +1,5 @@
+document.getElementById("Add").addEventListener("click", addNewTodo)
+
 
 function getAndDisplayToDos(){
 
@@ -17,6 +19,14 @@ function getAndDisplayToDos(){
 }
 
 function displayToDos(todos){
+    todos.forEach(element => {
+        todo = document.createElement("div");
+        todoText = document.createElement("span"); 
+        todoText.textContent = element.text;
+        todo.appendChild(todoText)
+        document.getElementById("TodoList").appendChild(todo)
+        
+    });
 
 
 }
@@ -26,13 +36,15 @@ window.onload = function(){
 }
 
 function addNewTodo(){
+    
     let data = {
-        text: "Some Text"
+        text: document.getElementById("input-box").value
     }
     let xhttp2 = new XMLHttpRequest();
     xhttp2.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let todo = JSON.parse(this.responseText);
+            getAndDisplayToDos()
             console.log(todo);
         } else if (this.readyState == 4) {
             console.log(this.responseText);
@@ -54,6 +66,7 @@ function updateTodo(id, status){
         if (this.state == 4){
             if (this.status ==200){
                 console.log('Todo updated');
+                getAndDisplayToDos()
             } else{
                 console.error('Failed to update ToDo', this.responseText);
             }
@@ -72,6 +85,7 @@ function deleteTodo(id){
         if (this.readyState === 4) {
             if (this.status === 200) {
                 console.log('ToDo deleted successfully');
+                getAndDisplayToDos()
             } else {
                 console.error('Failed to delete ToDo:', this.responseText);
             }
