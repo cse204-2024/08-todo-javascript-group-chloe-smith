@@ -1,44 +1,54 @@
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #756A5F;
+    background-color: #ecf0f1;
+}
 
 
 .container{
     position: relative; 
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 25px;
+    display:flex;
     width: 100%;
     height: 100vh;
+    justify-content: center;
+    align-items: center;
     
 
 }
 
-.Todo{
-    position: absolute;
-    width: 300px;
-    height: 500px;
-    top: 25%;
-    left: 40%;
-    margin: auto;
-    background-color: blueviolet;
-    justify-content: center;
-    align-items: center;
-}
+    .Todo{
+        width: 300px;
+        height: 500px;
+        background-color: #E6B1CF;
+        overflow: auto;
+    }
+
 
 .Todo h1{
     text-align: center;
+    text-decoration: underline;
+    margin-bottom:0;
+    font-family: fantasy;
 }
 
 .item{
     display:flex;
     align-items: center;
     text-align: center;
-    margin-left: 25px;
-    background-color: blueviolet;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    /* background-color: #E66665; */
    
 }
 input{
     border: none;
     outline: none;
-    margin-left: 16px;
+    margin: 5px;
     padding: 10px;
+    border-radius: 20px;
+    
 }
 
 button{
@@ -47,12 +57,14 @@ button{
     border-radius: 50px;
     padding: 10px;
     cursor: pointer;
+    margin: 10px;
+    background-color: #E67D65;
 
 }
 
 ul li{
     list-style: none;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
 .checkbox-input{
@@ -61,12 +73,24 @@ ul li{
 }
 .completed-task {
     text-decoration: line-through;
-    color: #777;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #756A5F;
 }
 button:focus{
-    background-color: greenyellow;
+    transform: scale(1.1);
 
 }
-.delete-button{
-    background-color: blue;
+#DeleteBtn{
+    background-color: #F5677B;
+    margin-left: 25px;
+    padding:5px;
+}
+
+.completed{
+    background-color: #fff;
+    border-radius: 100%;
+}
+.completed-green{
+    background-color: #67F584
+
 }

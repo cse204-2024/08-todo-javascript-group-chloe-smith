@@ -25,6 +25,7 @@ function displayToDos(todos){
         document.getElementById("TodoList").appendChild(todo)
 
         let Delete = document.createElement("button");
+        Delete.setAttribute("id", "DeleteBtn")
         Delete.textContent = "Delete";
         Delete.addEventListener("click", () => deleteTodo(element.id))
         todo.appendChild(Delete);
@@ -44,6 +45,7 @@ window.onload = function(){
             addNewTodo();
         }
     });
+    let Delete = document.createElement("button");
     Delete.addEventListener("keypress", function(event) {
         if (event.keyCode === 13) {
             deleteTodo(id);
@@ -71,6 +73,7 @@ function addNewTodo(){
             document.getElementById("TodoList").appendChild(todo);
 
             let Delete = document.createElement("button");
+            Delete.setAttribute("id", "DeleteBtn")
             Delete.textContent = "Delete";
             
             Delete.addEventListener("click", () => deleteTodo(todotext.id));
@@ -78,9 +81,22 @@ function addNewTodo(){
             document.getElementById("TodoList").appendChild(todo);
 
             let Completed = document.createElement("button");
-            Completed.textContent = "Completed";
-            Completed.addEventListener("click", () => updateTodo(todotext.id));
+            // Completed.textContent = "Completed";
+            Completed.setAttribute("id", "Completed")
+            Completed.classList.add("completed");
+
+            Completed.addEventListener("click", () => {
+                // Assuming Completed is a child of the todo item
+                updateTodo(todotext.id);
+                Completed.classList.add('completed-green');
+                let todoElement = document.getElementById(todotext.id);
+                todoElement.classList.add('completed-task'); 
+                
+            });
             todo.insertBefore(Completed, todoText);
+
+
+            updateTodo(todotext.id)
             document.getElementById("TodoList").appendChild(todo);
         
             console.log(todo);
@@ -107,8 +123,9 @@ function updateTodo(id){
             if (this.status ==200){
                 console.log('Todo updated');
         
-                let todoElement = document.getElementById(id);
-                todoElement.classList.add('completed-task');
+                // let todoElement = document.getElementById(id);
+                // todoElement.classList.add('completed-task');
+                
                 
             } else{
                 console.error('Failed to update ToDo', this.responseText);
@@ -145,4 +162,4 @@ function deleteTodo(id){
     xhttp.send();
 }
 
-//how can I go about making the delete button delete when I hover over it and press enter 
+//how can I make the style of updtated to do remain after I reload the webpage?
